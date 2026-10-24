@@ -1,0 +1,53 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "disclaimer": "Heuristic meal budget rules for Agent Skill demos. Not personalized nutrition plans. Users/agents may override any parameter.",
+    "notes": "meal_kcal_budget is computed after workout burn is confirmed. Default goal is maintain."
+  },
+  "defaults": {
+    "body_weight_kg": 70,
+    "goal": "maintain",
+    "assumed_daily_tdee_multiplier": null
+  },
+  "goals": {
+    "cut": {
+      "name_zh": "减脂",
+      "name_en": "fat loss / cut",
+      "aliases": ["减脂", "减重", "减肥", "cut", "deficit"],
+      "burn_ratio": 0.55,
+      "base_meal_window_kcal": 280,
+      "protein_min_g": 25,
+      "prefer_lower_kcal": true,
+      "description": "本餐预算 ≈ 训练消耗×0.55 + 280kcal；优先偏低热量、蛋白≥25g 的组合。"
+    },
+    "maintain": {
+      "name_zh": "维持",
+      "name_en": "maintain",
+      "aliases": ["维持", "保持", "maintain", "平衡"],
+      "burn_ratio": 0.75,
+      "base_meal_window_kcal": 350,
+      "protein_min_g": 20,
+      "prefer_lower_kcal": false,
+      "description": "本餐预算 ≈ 训练消耗×0.75 + 350kcal（默认）；在预算±15% 内给 3–5 套对齐说明。"
+    },
+    "bulk": {
+      "name_zh": "增肌",
+      "name_en": "muscle gain / bulk",
+      "aliases": ["增肌", "增重", "bulk", "surplus", "练后补"],
+      "burn_ratio": 0.95,
+      "base_meal_window_kcal": 450,
+      "protein_min_g": 35,
+      "prefer_lower_kcal": false,
+      "description": "本餐预算 ≈ 训练消耗×0.95 + 450kcal；优先更高蛋白组合。"
+    }
+  },
+  "budget_formula": "meal_kcal_budget = round(confirmed_burn_kcal * burn_ratio + base_meal_window_kcal)",
+  "tolerance": {
+    "kcal_relative": 0.15,
+    "note": "推荐套餐热量落在预算的 ±15% 内优先；否则在说明中标出偏差。"
+  },
+  "recommend_count": {
+    "min": 3,
+    "max": 5
+  }
+}
